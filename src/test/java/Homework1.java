@@ -1,40 +1,32 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
-
 public class Homework1 {
     @Test
     public void answerIs() {
-        //Task 1:
-        tachkaSale("Икарус","31415926","0.005");
-        //Task 2:
-        ticketToRide(2.54,68.50,1247.5);
-        //Task 3:
-        howOldAmI("111290-10415");
-        //Task 4*:
-
+        carSale("Икарус","31415926","0.005");
+        flyCost(2.54,68.50,1247.5);
+        birthdayDate("111290-10415");
+        mapDistance(40.6892,74.0445,40.7484, 73.9857);
     }
 
+    private void carSale(String carBrand, String mileage, String cost){
+        int mileageToInt = Integer.parseInt(mileage);
+        double costToDouble = Double.parseDouble(cost);
 
-    private void tachkaSale(String marka, String probeg, String cena){
-        int prbegToInt = Integer.parseInt(probeg);
-        double cenaToDouble = Double.parseDouble(cena);
-
-        System.out.println("Продаю машину «" + marka + "» с пробегом " + prbegToInt + " за " + cenaToDouble + " денег!");
+        System.out.println("Продаю машину «" + carBrand + "» с пробегом " + mileageToInt + " за " + costToDouble + " денег!");
     }
 
-    private void ticketToRide(double cenaSolarki, double rashod, double distance){
-        double denegPotratili = cenaSolarki * (rashod / 100) * distance;
-        double roundedDenegPotratili = Math.round(denegPotratili*100.0)/100.0;
+    private void flyCost(double fuelCost, double consumption, double distance){
+        double spentMoney = fuelCost * (consumption / 100) * distance;
+        double roundedSpentMoney = Math.round(spentMoney*100.0)/100.0;
 
-        System.out.println("Всего на перелет потратили " + roundedDenegPotratili + " денег");
-        //System.out.println("Всего на перелет потратили " + denegPotratili + " денег");
+        System.out.println("Всего на перелет потратили " + roundedSpentMoney + " денег");
     }
 
-    private void howOldAmI(String persKod){
-        String day = persKod.substring(0, 2);
-        int month = Integer.parseInt(persKod.substring(2, 4));
-        String year = persKod.substring(4, 6);
+    private void birthdayDate(String personalCode){
+        String day = personalCode.substring(0, 2);
+        int month = Integer.parseInt(personalCode.substring(2, 4));
+        String year = personalCode.substring(4, 6);
 
         String monthString = "... хммм, подожди ка, ты не родился ни в какой месяц";
         if( month == 1){
@@ -77,8 +69,22 @@ public class Homework1 {
         System.out.println("Твоя дата рождения " + day + " " + monthString + " 19" + year + " года!");
     }
 
-//    private void navigator(double shirota1, double dolgota1, double shirota2, double dolgota1){
-//
-//    }
-    
+    private double radians(double degrees){
+        double pi = 3.1415926;
+        return degrees * pi / 180;
+    }
+
+    private void mapDistance(double latitude, double longitude, double latitude2, double longitude2){
+        double degreesLongitude = radians(longitude2 - longitude);
+        double degreesLatitude = radians(latitude2 - latitude);
+
+        double formula = (Math.sin(degreesLatitude / 2) * Math.sin(degreesLatitude / 2)) + Math.cos(radians(latitude)) * Math.cos(radians(latitude2)) * (Math.sin(degreesLongitude / 2) * Math.sin(degreesLongitude / 2));
+        double angle = 2 * Math.atan2(Math.sqrt(formula), Math.sqrt(1 - formula));
+        int earthRadius = 6371;
+        double answer =  angle * earthRadius;
+        double roundedAnswer = Math.round(answer*100.0)/100.0;
+
+        System.out.println("Расстояние между этими двумя точками " + roundedAnswer + " км.");
+
+    }
 }
